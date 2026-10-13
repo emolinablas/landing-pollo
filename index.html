@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Original Pollo a la Leña | Asado Tradicional a Fuego Lento</title>
-  <meta name="description" content="El Original Pollo a la Leña. 100% asado a la leña de encino. Con papas horneadas, cebolla y chile toreado. ¡Haz tu pedido con anticipación por WhatsApp!">
+  <meta name="description" content="El Original Pollo a la Leña. 100% asado a la leña de encino. Con papas horneadas, cebolla, chile toreado y tortillas calientitas. ¡Haz tu pedido con anticipación por WhatsApp!">
   <link rel="icon" type="image/png" href="images/logo.png">
   
   <!-- Open Graph / Redes Sociales -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="El Original Pollo a la Leña | ¡Hoy es un gran día para disfrutar!">
   <meta property="og:description" content="Auténtico pollo asado a la leña con papas, cebolla y chile. Entero Q95, Medio Q50, Cuarto Q28. ¡Pide por WhatsApp!">
-  <meta property="og:image" content="images/logo.png">
+  <meta property="og:image" content="images/hero-bg.jpg">
   
   <style>
     :root {
@@ -20,9 +20,9 @@
       --primary-light: #ff7043;
       --secondary: #ff9800;
       --accent: #ffd54f;
-      --dark: #16120e;
-      --dark-surface: #221a14;
-      --dark-card: #2a2018;
+      --dark: #14100c;
+      --dark-surface: #1e1711;
+      --dark-card: #271e16;
       --gray-light: #f7f4ee;
       --text-main: #2b2723;
       --text-muted: #6e675f;
@@ -31,7 +31,7 @@
       --whatsapp-hover: #1ebd5a;
       --radius: 14px;
       --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-      --shadow-lg: 0 20px 35px -5px rgba(216, 67, 21, 0.25), 0 10px 15px -5px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 35px -5px rgba(216, 67, 21, 0.3), 0 10px 15px -5px rgba(0, 0, 0, 0.1);
     }
 
     * {
@@ -48,22 +48,21 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Contenedor */
     .container {
       width: 100%;
-      max-width: 1140px;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    /* Header / Nav */
+    /* Header */
     header {
-      background: rgba(22, 18, 14, 0.96);
-      backdrop-filter: blur(10px);
+      background: rgba(18, 14, 11, 0.94);
+      backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 152, 0, 0.15);
     }
 
     .nav-wrapper {
@@ -110,7 +109,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
     }
 
     .nav-link {
@@ -128,7 +127,7 @@
     .nav-btn {
       background: var(--whatsapp);
       color: var(--white);
-      padding: 9px 18px;
+      padding: 9px 20px;
       border-radius: 50px;
       text-decoration: none;
       font-weight: 700;
@@ -137,7 +136,7 @@
       align-items: center;
       gap: 8px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
     }
 
     .nav-btn:hover {
@@ -145,12 +144,13 @@
       transform: translateY(-1px);
     }
 
-    /* Hero Section */
+    /* Hero Section con background dinámico */
     .hero {
-      background: radial-gradient(circle at 50% 20%, #2f2115 0%, #17120d 100%);
-      color: var(--white);
-      padding: 50px 0 70px;
       position: relative;
+      background: linear-gradient(180deg, rgba(14, 10, 7, 0.86) 0%, rgba(20, 15, 11, 0.93) 100%),
+                  url('images/hero-bg.jpg') center center / cover no-repeat;
+      color: var(--white);
+      padding: 65px 0 90px;
       overflow: hidden;
     }
 
@@ -160,16 +160,16 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 25px;
+      height: 30px;
       background: var(--gray-light);
-      border-radius: 30px 30px 0 0;
+      border-radius: 32px 32px 0 0;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      gap: 40px;
+      gap: 45px;
     }
 
     .hero-content {
@@ -179,21 +179,21 @@
     .badge-fuego {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(216, 67, 21, 0.25);
-      border: 1px solid rgba(255, 152, 0, 0.5);
+      gap: 8px;
+      background: rgba(216, 67, 21, 0.3);
+      border: 1px solid rgba(255, 152, 0, 0.6);
       color: var(--accent);
-      padding: 6px 14px;
+      padding: 7px 16px;
       border-radius: 50px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      font-size: 0.84rem;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .hero h1 {
-      font-size: 2.7rem;
+      font-size: 2.85rem;
       line-height: 1.1;
       font-weight: 900;
       margin-bottom: 14px;
@@ -217,9 +217,9 @@
     }
 
     .hero p {
-      font-size: 1.05rem;
-      color: #dfd7cc;
-      line-height: 1.55;
+      font-size: 1.08rem;
+      color: #e6dfd5;
+      line-height: 1.6;
       margin-bottom: 24px;
     }
 
@@ -231,12 +231,12 @@
     }
 
     .hero-pill {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 6px 14px;
       border-radius: 8px;
-      font-size: 0.85rem;
-      color: #f0eae1;
+      font-size: 0.88rem;
+      color: #f7f1e7;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -251,7 +251,7 @@
     .btn-main {
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: var(--white);
-      padding: 14px 28px;
+      padding: 15px 30px;
       border-radius: 50px;
       text-decoration: none;
       font-size: 1.02rem;
@@ -265,14 +265,14 @@
 
     .btn-main:hover {
       transform: translateY(-2px);
-      box-shadow: 0 15px 30px rgba(216, 67, 21, 0.4);
+      box-shadow: 0 15px 30px rgba(216, 67, 21, 0.45);
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
       color: var(--white);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 14px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 15px 26px;
       border-radius: 50px;
       text-decoration: none;
       font-size: 1.02rem;
@@ -284,7 +284,7 @@
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* Hero Visual Card */
@@ -296,8 +296,8 @@
       background: var(--dark-surface);
       border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(255, 152, 0, 0.3);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1.5px solid rgba(255, 152, 0, 0.35);
+      box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.7);
     }
 
     .hero-card-featured img {
@@ -305,55 +305,62 @@
       height: 380px;
       object-fit: cover;
       display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .hero-card-featured:hover img {
+      transform: scale(1.03);
     }
 
     .hero-card-badge {
       position: absolute;
       top: -12px;
       right: 20px;
-      background: #b71c1c;
+      background: #c62828;
       color: var(--white);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 800;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 50px;
-      box-shadow: 0 4px 12px rgba(183, 28, 28, 0.4);
+      box-shadow: 0 4px 14px rgba(198, 40, 40, 0.5);
       display: flex;
       align-items: center;
       gap: 6px;
       animation: pulse 2s infinite;
+      z-index: 2;
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
+      50% { transform: scale(1.05); }
     }
 
     .hero-card-footer {
-      padding: 14px 18px;
-      background: rgba(34, 26, 20, 0.95);
+      padding: 14px 20px;
+      background: rgba(26, 20, 15, 0.96);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .hero-card-footer span {
-      font-size: 0.88rem;
-      color: #dfd7cc;
+      font-size: 0.9rem;
+      color: #e0d8cc;
     }
 
     .hero-card-footer strong {
       color: var(--secondary);
+      font-weight: 800;
     }
 
-    /* Alerta de Pedido */
+    /* Urgency Banner */
     .urgency-bar {
       background: #fff3e0;
       border-left: 5px solid var(--primary);
-      padding: 14px 20px;
-      border-radius: 10px;
+      padding: 16px 24px;
+      border-radius: 12px;
       margin: 30px auto 0;
-      max-width: 1100px;
+      max-width: 1120px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -365,23 +372,23 @@
     .urgency-text {
       display: flex;
       align-items: center;
-      gap: 10px;
-      color: #4e342e;
+      gap: 12px;
+      color: #3e2723;
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 1rem;
     }
 
     .urgency-text span {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
     }
 
     .urgency-cta {
       background: var(--primary);
       color: var(--white);
-      padding: 8px 18px;
+      padding: 9px 22px;
       border-radius: 50px;
       text-decoration: none;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 800;
       transition: background 0.2s;
     }
@@ -392,7 +399,7 @@
 
     /* Menu Section */
     .menu-section {
-      padding: 60px 0 80px;
+      padding: 65px 0 85px;
     }
 
     .section-title {
@@ -401,7 +408,7 @@
     }
 
     .section-title h2 {
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       font-weight: 900;
       color: var(--dark);
       letter-spacing: -0.5px;
@@ -409,13 +416,13 @@
 
     .section-title p {
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       margin-top: 8px;
     }
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 28px;
     }
 
@@ -427,14 +434,14 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.06);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       overflow: hidden;
     }
 
     .menu-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.14);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.15);
     }
 
     .menu-card.destacado {
@@ -448,23 +455,24 @@
       right: 14px;
       background: var(--primary);
       color: var(--white);
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 800;
       text-transform: uppercase;
-      padding: 5px 12px;
+      padding: 5px 14px;
       border-radius: 50px;
       letter-spacing: 0.6px;
       z-index: 2;
-      box-shadow: 0 4px 10px rgba(216, 67, 21, 0.35);
+      box-shadow: 0 4px 10px rgba(216, 67, 21, 0.4);
     }
 
     .card-img-wrapper {
       width: 100%;
-      height: 200px;
+      height: 220px;
       border-radius: 10px;
       overflow: hidden;
       margin-bottom: 16px;
       position: relative;
+      background: #2a2018;
     }
 
     .card-img-wrapper img {
@@ -476,7 +484,7 @@
     }
 
     .menu-card:hover .card-img-wrapper img {
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
 
     .card-header {
@@ -487,13 +495,13 @@
     }
 
     .card-title {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: var(--dark);
     }
 
     .card-price {
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       font-weight: 900;
       color: var(--primary);
     }
@@ -508,7 +516,7 @@
     .card-incluye {
       background: var(--gray-light);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       margin-bottom: 20px;
       font-size: 0.88rem;
       flex-grow: 1;
@@ -518,7 +526,7 @@
       display: block;
       color: var(--dark);
       margin-bottom: 6px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
 
     .card-incluye ul {
@@ -546,10 +554,10 @@
       color: var(--white);
       text-decoration: none;
       text-align: center;
-      padding: 12px;
+      padding: 13px;
       border-radius: 10px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       transition: all 0.2s ease;
       display: flex;
       justify-content: center;
@@ -569,7 +577,7 @@
     /* Sección Local / Visítanos */
     .local-section {
       background: var(--white);
-      padding: 80px 0;
+      padding: 85px 0;
       border-top: 1px solid rgba(0, 0, 0, 0.05);
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
@@ -585,13 +593,13 @@
       position: relative;
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
       border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .local-image-wrapper img {
       width: 100%;
-      height: 380px;
+      height: 400px;
       object-fit: cover;
       display: block;
     }
@@ -600,12 +608,12 @@
       position: absolute;
       bottom: 16px;
       left: 16px;
-      background: rgba(22, 18, 14, 0.9);
+      background: rgba(18, 14, 11, 0.92);
       backdrop-filter: blur(8px);
       color: var(--white);
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -618,7 +626,7 @@
     }
 
     .local-content h2 {
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       font-weight: 900;
       color: var(--dark);
       margin-bottom: 16px;
@@ -650,18 +658,18 @@
 
     .local-feature-card strong {
       color: var(--dark);
-      font-size: 0.95rem;
+      font-size: 0.98rem;
     }
 
     .local-feature-card span {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.86rem;
     }
 
     /* Diferenciales */
     .features {
       background: var(--gray-light);
-      padding: 70px 0;
+      padding: 75px 0;
     }
 
     .features-grid {
@@ -672,15 +680,15 @@
     }
 
     .feature-item {
-      padding: 24px 20px;
+      padding: 26px 22px;
       background: var(--white);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
     .feature-icon {
-      width: 60px;
-      height: 60px;
+      width: 62px;
+      height: 62px;
       background: #fff3e0;
       border-radius: 50%;
       display: flex;
@@ -688,11 +696,11 @@
       justify-content: center;
       margin: 0 auto 16px;
       color: var(--primary);
-      font-size: 1.8rem;
+      font-size: 1.85rem;
     }
 
     .feature-item h3 {
-      font-size: 1.2rem;
+      font-size: 1.22rem;
       font-weight: 800;
       margin-bottom: 8px;
       color: var(--dark);
@@ -701,11 +709,12 @@
     .feature-item p {
       color: var(--text-muted);
       font-size: 0.95rem;
+      line-height: 1.45;
     }
 
     /* Pasos para pedir */
     .steps-section {
-      padding: 70px 0;
+      padding: 75px 0;
       text-align: center;
       background: var(--white);
     }
@@ -719,7 +728,7 @@
 
     .step-box {
       background: var(--gray-light);
-      padding: 25px 20px;
+      padding: 26px 20px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
@@ -740,7 +749,7 @@
     }
 
     .step-box h4 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 800;
       margin-bottom: 6px;
       color: var(--dark);
@@ -748,32 +757,33 @@
 
     .step-box p {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
 
-    /* Banner CTA */
+    /* Banner CTA Final con fondo de leña y brasas */
     .cta-container {
-      padding: 60px 0 80px;
+      padding: 60px 0 85px;
     }
 
     .cta-banner {
-      background: radial-gradient(circle at 50% 30%, #302115 0%, #16120e 100%);
+      background: linear-gradient(180deg, rgba(16, 12, 9, 0.88) 0%, rgba(24, 17, 12, 0.94) 100%),
+                  url('images/hero-bg.jpg') center center / cover no-repeat;
       color: var(--white);
-      padding: 55px 30px;
+      padding: 60px 30px;
       border-radius: 24px;
       text-align: center;
       position: relative;
-      border: 1px solid rgba(255, 152, 0, 0.25);
-      box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.4);
+      border: 1.5px solid rgba(255, 152, 0, 0.3);
+      box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.6);
     }
 
     .cta-logo {
-      height: 70px;
+      height: 75px;
       margin-bottom: 16px;
     }
 
     .cta-banner h2 {
-      font-size: 2.3rem;
+      font-size: 2.35rem;
       font-weight: 900;
       margin-bottom: 12px;
       letter-spacing: -0.5px;
@@ -797,14 +807,14 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45);
       transition: all 0.25s ease;
     }
 
     .btn-wa-large:hover {
       background: var(--whatsapp-hover);
       transform: translateY(-2px);
-      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5);
+      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.55);
     }
 
     /* Footer */
@@ -889,13 +899,13 @@
 
     @media (max-width: 600px) {
       .hero h1 {
-        font-size: 2.1rem;
+        font-size: 2.15rem;
       }
       .section-title h2 {
-        font-size: 1.8rem;
+        font-size: 1.85rem;
       }
       .cta-banner h2 {
-        font-size: 1.8rem;
+        font-size: 1.85rem;
       }
       .btn-main, .btn-secondary {
         width: 100%;
@@ -930,7 +940,7 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section con Fondo de Brasas & Spits -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
@@ -939,7 +949,7 @@
           <h1>¡Hoy es un Gran Día para <span>el Mejor Sabor</span>!</h1>
           <div class="hero-tagline">🍗 El Original Pollo a la Leña</div>
           <p>
-            Marinado artesanalmente con nuestra receta de especias naturales y asado pacientemente a fuego lento de leña. Piel dorada y crujiente, carne suave, tierna y jugosa con el auténtico toque ahumado.
+            Marinado artesanalmente con nuestra receta de especias naturales y asado pacientemente a fuego lento de leña. Piel dorada y crujiente, carne suave, tierna y jugosa con el auténtico aroma de las brasas.
           </p>
 
           <div class="hero-pills">
@@ -963,10 +973,10 @@
         <div class="hero-visual">
           <div class="hero-card-featured">
             <span class="hero-card-badge">🔥 ¡Se acaba rápido!</span>
-            <img src="images/pollo-charola.jpg" alt="Pollo a la leña recién asado con papas, cebolla y chile">
+            <img src="images/combo-familiar.jpg" alt="Pollo asado a la leña servido con papas, cebollas, chiles y tortillas">
             <div class="hero-card-footer">
               <span>Recién salido de la leña</span>
-              <strong>Pedidos con anticipación</strong>
+              <strong>Haz tu pedido ya</strong>
             </div>
           </div>
         </div>
@@ -981,7 +991,7 @@
         <span>⏰</span>
         <div>
           <strong>¡Recuerda hacer tus pedidos con anticipación!</strong>
-          <div style="font-size: 0.85rem; font-weight: normal; color: #5d4037;">Asamos por tandas a fuego lento para servirte siempre caliente y recién hecho.</div>
+          <div style="font-size: 0.86rem; font-weight: normal; color: #5d4037;">Asamos por tandas a fuego lento para servirte siempre caliente y recién hecho.</div>
         </div>
       </div>
       <a href="https://wa.me/50254289478?text=Hola,%20quiero%20apartar%20mi%20pedido%20de%20pollo%20con%20anticipación" class="urgency-cta" target="_blank" rel="noopener">
@@ -995,7 +1005,7 @@
     <div class="container">
       <div class="section-title">
         <h2>Nuestro Menú Calientito</h2>
-        <p>100% asado a la leña de encino. Acompañado de papas doradas, cebollas y chiles.</p>
+        <p>100% asado a la leña de encino. Acompañado de papas doradas, cebollines, chiles y tortillas.</p>
       </div>
 
       <div class="menu-grid">
@@ -1027,7 +1037,7 @@
         <div class="menu-card destacado">
           <span class="tag-destacado">⭐ El Más Pedido</span>
           <div class="card-img-wrapper">
-            <img src="images/pollo-plato.jpg" alt="Medio Pollo a la leña con papas y chile">
+            <img src="images/plato-rustico.jpg" alt="Medio Pollo a la leña con guarnición completa">
           </div>
           <div class="card-header">
             <h3 class="card-title">Medio Pollo</h3>
@@ -1052,7 +1062,7 @@
         <!-- Pollo Entero -->
         <div class="menu-card">
           <div class="card-img-wrapper">
-            <img src="images/pollo-charola.jpg" alt="Pollo Entero a la leña para la familia">
+            <img src="images/combo-familiar.jpg" alt="Pollo Entero a la leña banquete familiar">
           </div>
           <div class="card-header">
             <h3 class="card-title">Pollo Entero</h3>
@@ -1176,7 +1186,7 @@
     </div>
   </section>
 
-  <!-- Banner CTA Final -->
+  <!-- Banner CTA Final con fondo de leña -->
   <div class="container cta-container">
     <div class="cta-banner">
       <img src="images/logo.png" alt="Logo El Original Pollo a la Leña" class="cta-logo">
