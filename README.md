@@ -3,15 +3,15 @@
 Landing page ultrarrápida en HTML5 y CSS puro, optimizada para pedidos directos vía WhatsApp y lista para desplegar en Netlify.
 
 ## Estructura
-- `index.html`: Página principal con menú (Entero Q95, Medio Q50, Cuarto Q28), propuesta de valor, proceso de pedido en 3 pasos y botón flotante de WhatsApp.
+- `index.html`: Página completa (HTML, CSS y JS en un solo archivo). Secciones: hero, menú con armador de pedido (Entero Q95, Medio Q50, Cuarto Q28), el sabor, cómo pedir en 3 pasos, local y llamado final. El armador suma las porciones y abre WhatsApp con el pedido y el total ya escritos.
+- `images/`: Fotos en WebP recortadas sin texto encima, logo con fondo transparente, favicon e imagen para compartir en redes (`og-image.jpg`).
 - `netlify.toml`: Configuración de headers de seguridad y publicación para Netlify.
 
 ## Configuración del Número de WhatsApp
-En `index.html` (línea ~737), reemplaza:
-```javascript
-const NUMERO_WHATSAPP = "50254289478";
-```
-por tu número real con código de país (ejemplo: `50212345678`).
+El número aparece en los enlaces `wa.me` y en la constante `WHATSAPP` del script al final de `index.html`. Para cambiarlo, busca y reemplaza `50254289478` en todo el archivo por tu número con código de país (ejemplo: `50212345678`). Si cambia el número visible, reemplaza también `5428-9478`.
+
+## Cambiar precios
+Cada tarjeta del menú tiene `data-price` (lo usa el armador de pedido) y el precio visible dentro de `.price`. Actualiza ambos, junto con los precios del hero (`.hero-prices`) y el texto del mensaje en el enlace de la tarjeta.
 
 ---
 
