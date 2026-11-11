@@ -1798,7 +1798,8 @@
       box-shadow: inset 0 0 0 1px var(--line);
     }
 
-    .map {
+    /* más específico que .maplibregl-map, que llega después y pone position: relative */
+    .map-wrap .map {
       position: absolute;
       inset: 0;
     }
