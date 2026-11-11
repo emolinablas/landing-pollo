@@ -5,6 +5,7 @@ Landing page ultrarrápida en HTML5 y CSS puro, optimizada para pedidos directos
 ## Estructura
 - `index.html`: Página completa (HTML, CSS y JS en un solo archivo). Secciones: hero, menú con armador de pedido (Entero Q95, Medio Q50, Cuarto Q28), el sabor, cómo pedir en 3 pasos, local y llamado final. El armador suma las porciones y abre WhatsApp con el pedido y el total ya escritos.
 - `images/`: Fotos en WebP recortadas sin texto encima, logo con fondo transparente, favicon e imagen para compartir en redes (`og-image.jpg`).
+- `mapa/ixhuatan.pmtiles`: Mapa local de Ixhuatán y sus aldeas (datos de OpenStreetMap, ~1 MB). Lo usa la hoja de entrega para que el cliente marque su casa; no depende de Google Maps. Para actualizarlo: `pmtiles extract https://build.protomaps.com/AAAAMMDD.pmtiles mapa/ixhuatan.pmtiles --bbox=-90.34,14.12,-90.20,14.28 --maxzoom=15`.
 - `netlify.toml`: Configuración de headers de seguridad y publicación para Netlify.
 
 ## Configuración del Número de WhatsApp
@@ -44,3 +45,6 @@ git push -u origin main
 1. Entra a [Netlify Drop](https://app.netlify.com/drop).
 2. Arrastra la carpeta `landing-pollo` directamente al navegador.
 3. El sitio estará activo al instante con una URL gratuita `.netlify.app`.
+
+## Aldeas de entrega
+La lista está en `index.html`, dentro de `<fieldset class="aldeas">`. Cada aldea lleva `data-lat` y `data-lng` con su centro, que es adonde se mueve el mapa al elegirla.
