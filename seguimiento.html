@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu pedido | El Original Pollo a la Leña</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0e0907">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400..800&family=Kaushan+Script&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --coal: #0e0907;
+      --coal-2: #160f0b;
+      --coal-3: #1e1510;
+      --line: rgba(255, 222, 186, 0.12);
+      --cream: #fbefdc;
+      --ink: #1b120c;
+      --muted: #b8a591;
+      --ember: #ff5a1f;
+      --flame: #ffb627;
+      --yolk: #ffc93c;
+      --ok: #3ddc84;
+      --wa: #25d366;
+      --f-display: "Anton", Impact, "Arial Narrow", sans-serif;
+      --f-script: "Kaushan Script", "Brush Script MT", cursive;
+      --f-body: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: var(--f-body);
+      line-height: 1.5;
+      color: var(--cream);
+      background: radial-gradient(90% 50% at 50% 0%, rgba(255, 90, 31, 0.16), transparent 70%), var(--coal);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: min(560px, 100% - 32px);
+      margin-inline: auto;
+      padding: 20px 0 40px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .top img { height: 64px; width: auto; }
+
+    .top a {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .script {
+      display: inline-block;
+      font-family: var(--f-script);
+      font-size: 1.5rem;
+      color: var(--yolk);
+      transform: rotate(-3deg);
+    }
+
+    h1 {
+      margin: 0.1em 0 0.25em;
+      font-family: var(--f-display);
+      font-weight: 400;
+      font-size: clamp(2.4rem, 11vw, 3.6rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .detalle {
+      margin: 0;
+      font-size: 1.08rem;
+      color: rgba(251, 239, 220, 0.85);
+    }
+
+    .detalle strong { color: var(--flame); }
+
+    .card {
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, var(--coal-3), var(--coal-2));
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    /* Pasos */
+    .pasos {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .paso {
+      position: relative;
+      display: flex;
+      gap: 16px;
+      padding-bottom: 22px;
+      color: var(--muted);
+    }
+
+    .paso:last-child { padding-bottom: 0; }
+
+    .paso::before {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 28px;
+      bottom: 0;
+      width: 2px;
+      background: var(--line);
+    }
+
+    .paso:last-child::before { display: none; }
+
+    .punto {
+      position: relative;
+      flex: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 2px rgba(255, 222, 186, 0.25);
+    }
+
+    .paso strong {
+      display: block;
+      font-size: 1.05rem;
+      color: inherit;
+    }
+
+    .paso small { font-size: 0.88rem; }
+
+    .paso.hecho { color: var(--cream); }
+    .paso.hecho::before { background: var(--ok); }
+
+    .paso.hecho .punto {
+      background: var(--ok);
+      box-shadow: none;
+    }
+
+    .paso.hecho .punto::after {
+      content: "";
+      position: absolute;
+      left: 9px;
+      top: 6px;
+      width: 8px;
+      height: 13px;
+      border: solid var(--ink);
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+
+    .paso.actual { color: var(--cream); }
+
+    .paso.actual .punto {
+      background: var(--ember);
+      box-shadow: 0 0 0 0 rgba(255, 90, 31, 0.6);
+      animation: latido 1.6s ease-out infinite;
+    }
+
+    @keyframes latido {
+      to { box-shadow: 0 0 0 14px rgba(255, 90, 31, 0); }
+    }
+
+    /* Mapa */
+    .mapa-wrap {
+      position: relative;
+      height: 300px;
+      margin-top: 22px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #1a130e;
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    .mapa-wrap .mapa {
+      position: absolute;
+      inset: 0;
+    }
+
+    .marca {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 20px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    .marca--moto {
+      background: var(--ember);
+      box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.3), 0 6px 14px rgba(0, 0, 0, 0.6);
+      transition: transform 1s linear;
+    }
+
+    .marca--casa { background: var(--cream); }
+
+    .mapa-nota {
+      margin: 10px 4px 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 22px;
+      padding: 1em 1.4em;
+      border-radius: 999px;
+      background: var(--wa);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .pie {
+      margin-top: 26px;
+      text-align: center;
+      font-family: var(--f-script);
+      font-size: 1.15rem;
+      color: rgba(251, 239, 220, 0.6);
+    }
+
+    .maplibregl-ctrl-attrib {
+      font-size: 10px;
+      background: rgba(14, 9, 7, 0.7) !important;
+      color: var(--muted);
+    }
+
+    .maplibregl-ctrl-attrib a { color: var(--muted) !important; }
+
+    [hidden] { display: none !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .paso.actual .punto { animation: none; }
+      .marca--moto { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="top">
+      <img src="images/logo.webp" width="420" height="492" alt="El Original Pollo a la Leña">
+      <a href="/">Ver menú</a>
+    </div>
+
+    <span class="script" id="saludo">Tu pedido</span>
+    <h1 id="titulo" aria-live="polite">Buscando…</h1>
+    <p class="detalle" id="detalle" aria-live="polite"></p>
+
+    <div class="card" id="pasos-card" hidden>
+      <ol class="pasos">
+        <li class="paso" data-paso="recibido">
+          <span class="punto"></span>
+          <div><strong>Pedido recibido</strong><small></small></div>
+        </li>
+        <li class="paso" data-paso="camino">
+          <span class="punto"></span>
+          <div><strong>En camino</strong><small></small></div>
+        </li>
+        <li class="paso" data-paso="entregado">
+          <span class="punto"></span>
+          <div><strong>Entregado</strong><small></small></div>
+        </li>
+      </ol>
+    </div>
+
+    <div id="mapa-bloque" hidden>
+      <div class="mapa-wrap"><div class="mapa" id="mapa"></div></div>
+      <p class="mapa-nota" id="mapa-nota"></p>
+    </div>
+
+    <a class="btn" href="https://wa.me/50254289478?text=Hola%2C%20tengo%20una%20consulta%20sobre%20mi%20pedido" target="_blank" rel="noopener">¿Dudas? Escríbenos por WhatsApp</a>
+
+    <p class="pie">¡Gracias por su preferencia!</p>
+  </main>
+
+  <script>
+    (() => {
+      const API = ['127.0.0.1', 'localhost'].includes(location.hostname)
+        ? 'http://127.0.0.1:8791/api/seguimiento'
+        : 'https://polloalalena.globalstechnology.com/api/seguimiento';
+      const token = new URLSearchParams(location.search).get('p') || '';
+
+      const titulo = document.getElementById('titulo');
+      const detalle = document.getElementById('detalle');
+      const pasosCard = document.getElementById('pasos-card');
+      const mapaBloque = document.getElementById('mapa-bloque');
+      const mapaNota = document.getElementById('mapa-nota');
+      let temporizador = 0;
+      let mapa = null;
+      let marcaMoto = null;
+      let marcaCasa = null;
+      let encuadrado = false;
+
+      const hora = (iso) => iso ? new Date(iso).toLocaleTimeString('es-GT', { hour: 'numeric', minute: '2-digit' }) : '';
+
+      const fin = (cabeza, texto) => {
+        clearInterval(temporizador);
+        titulo.textContent = cabeza;
+        detalle.textContent = texto;
+        pasosCard.hidden = true;
+        mapaBloque.hidden = true;
+      };
+
+      const paso = (nombre, clase, nota) => {
+        const el = document.querySelector(`[data-paso="${nombre}"]`);
+        el.classList.remove('hecho', 'actual');
+        if (clase) el.classList.add(clase);
+        el.querySelector('small').textContent = nota || '';
+      };
+
+      const cargarScript = (src) => new Promise((ok, falla) => {
+        const el = document.createElement('script');
+        el.src = src;
+        el.onload = ok;
+        el.onerror = falla;
+        document.head.appendChild(el);
+      });
+
+      // Mismo mapa local de la página principal (Ixhuatán y aldeas, datos de OpenStreetMap)
+      const prepararMapa = async (centro) => {
+        if (mapa) return mapa;
+        mapa = (async () => {
+          const css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css';
+          document.head.appendChild(css);
+
+          const [buffer] = await Promise.all([
+            fetch('mapa/ixhuatan.pmtiles').then((r) => {
+              if (!r.ok) throw new Error('mapa');
+              return r.arrayBuffer();
+            }),
+            cargarScript('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js'),
+            cargarScript('https://unpkg.com/pmtiles@3.2.1/dist/pmtiles.js'),
+            cargarScript('https://unpkg.com/@protomaps/basemaps@5.0.0/dist/basemaps.js')
+          ]);
+
+          const protocol = new pmtiles.Protocol();
+          maplibregl.addProtocol('pmtiles', protocol.tile);
+          protocol.add(new pmtiles.PMTiles({
+            getKey: () => 'ixhuatan',
+            getBytes: async (offset, length) => ({ data: buffer.slice(offset, offset + length) })
+          }));
+
+          const flavor = {
+            ...basemaps.namedFlavor('dark'),
+            background: '#1a130e', earth: '#1f1711',
+            park_a: '#1d2a1c', park_b: '#1d2a1c', wood_a: '#1c2418', wood_b: '#1c2418', scrub_a: '#1f2419', scrub_b: '#1f2419',
+            water: '#27405a', buildings: '#4d3c2d',
+            other: '#5f4f40', minor_service: '#6a5846', minor_a: '#8a745c', minor_b: '#7a6652', link: '#8a745c',
+            major: '#b0946f', highway: '#d1ac78', boundaries: '#4a3c30',
+            minor_service_casing: '#120c08', minor_casing: '#120c08', link_casing: '#120c08',
+            major_casing_late: '#120c08', major_casing_early: '#120c08', highway_casing_late: '#120c08', highway_casing_early: '#120c08',
+            city_label: '#fbefdc', city_label_halo: '#120c08', subplace_label: '#d9c7ae', subplace_label_halo: '#120c08',
+            roads_label_minor: '#b8a591', roads_label_major: '#d9c7ae'
+          };
+
+          const gl = new maplibregl.Map({
+            container: 'mapa',
+            center: centro,
+            zoom: 14.5,
+            maxZoom: 18,
+            dragRotate: false,
+            attributionControl: { compact: true },
+            style: {
+              version: 8,
+              glyphs: 'https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',
+              sprite: 'https://protomaps.github.io/basemaps-assets/sprites/v4/dark',
+              sources: {
+                protomaps: {
+                  type: 'vector',
+                  url: 'pmtiles://ixhuatan',
+                  attribution: '© <a href="https://openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+                }
+              },
+              layers: basemaps.layers('protomaps', flavor, { lang: 'es' })
+            }
+          });
+          gl.touchZoomRotate.disableRotation();
+          return gl;
+        })();
+        mapa.catch(() => {
+          mapa = null;
+          mapaBloque.hidden = true;
+        });
+        return mapa;
+      };
+
+      const marca = (clase, emoji, etiqueta) => {
+        const el = document.createElement('div');
+        el.className = `marca ${clase}`;
+        el.textContent = emoji;
+        el.setAttribute('role', 'img');
+        el.setAttribute('aria-label', etiqueta);
+        return el;
+      };
+
+      const pintarMapa = async (datos) => {
+        const destino = datos.destino ? [datos.destino.lng, datos.destino.lat] : null;
+        const moto = datos.repartidor ? [datos.repartidor.lng, datos.repartidor.lat] : null;
+        if (!destino && !moto) {
+          mapaBloque.hidden = true;
+          return;
+        }
+        mapaBloque.hidden = false;
+
+        let gl;
+        try {
+          gl = await prepararMapa(moto || destino);
+        } catch (error) {
+          return;
+        }
+        gl.resize();
+
+        if (destino) {
+          if (!marcaCasa) marcaCasa = new maplibregl.Marker({ element: marca('marca--casa', '🏠', 'Tu ubicación') }).setLngLat(destino).addTo(gl);
+          else marcaCasa.setLngLat(destino);
+        }
+        if (moto) {
+          if (!marcaMoto) marcaMoto = new maplibregl.Marker({ element: marca('marca--moto', '🛵', 'Repartidor') }).setLngLat(moto).addTo(gl);
+          else marcaMoto.setLngLat(moto);
+        } else if (marcaMoto) {
+          marcaMoto.remove();
+          marcaMoto = null;
+        }
+
+        // Se encuadra una vez; después el cliente puede mover el mapa sin que se le regrese
+        if (!encuadrado || (moto && !gl.getBounds().contains(moto))) {
+          if (moto && destino) {
+            gl.fitBounds([moto, destino], { padding: 70, maxZoom: 16.5, duration: encuadrado ? 800 : 0 });
+          } else {
+            gl.jumpTo({ center: moto || destino, zoom: datos.destinoexacto ? 16 : 14.5 });
+          }
+          encuadrado = true;
+        }
+
+        if (moto && datos.repartidor.segundos > 90) {
+          mapaNota.textContent = `Última ubicación del repartidor: hace ${Math.round(datos.repartidor.segundos / 60)} min. Puede ir por una zona sin señal.`;
+        } else if (moto) {
+          mapaNota.textContent = 'El repartidor va en camino. La ubicación se actualiza sola.';
+        } else if (!datos.destinoexacto) {
+          mapaNota.textContent = `El mapa muestra el centro de ${datos.aldea || 'tu aldea'}.`;
+        } else {
+          mapaNota.textContent = 'Aquí te lo vamos a dejar.';
+        }
+      };
+
+      const pintar = (datos) => {
+        pasosCard.hidden = false;
+
+        if (datos.estado === 'CANCELADO') {
+          fin('Pedido cancelado', 'Este pedido fue cancelado. Si crees que es un error, escríbenos por WhatsApp.');
+          return;
+        }
+
+        const aldea = datos.aldea ? ` a ${datos.aldea}` : '';
+
+        if (datos.estado === 'PENDIENTE') {
+          titulo.textContent = 'Lo estamos preparando';
+          detalle.innerHTML = '';
+          detalle.append('Te avisamos aquí cuando salga', aldea, '.');
+          if (datos.minutos) {
+            const tiempo = document.createElement('strong');
+            tiempo.textContent = ` Desde que sale tarda unos ${datos.minutos} min.`;
+            detalle.append(tiempo);
+          }
+          paso('recibido', 'hecho', hora(datos.recibido));
+          paso('camino', 'actual', 'Todavía no sale');
+          paso('entregado', '', '');
+        }
+
+        if (datos.estado === 'EN_CAMINO') {
+          titulo.textContent = datos.minutos <= 2 ? '¡Ya casi llega!' : `Llega en ~${datos.minutos} min`;
+          detalle.textContent = datos.paradasantes > 0
+            ? `Tu pollo va en camino${aldea}. Antes pasa a dejar ${datos.paradasantes === 1 ? 'otro pedido' : `${datos.paradasantes} pedidos`}.`
+            : `Tu pollo va en camino${aldea}. Eres la siguiente parada.`;
+          paso('recibido', 'hecho', hora(datos.recibido));
+          paso('camino', 'actual', `Salió a las ${hora(datos.salio)}`);
+          paso('entregado', '', '');
+        }
+
+        if (datos.estado === 'ENTREGADO') {
+          clearInterval(temporizador);
+          titulo.textContent = '¡Entregado!';
+          detalle.textContent = '¡Buen provecho! Gracias por pedir con nosotros.';
+          paso('recibido', 'hecho', hora(datos.recibido));
+          paso('camino', 'hecho', datos.salio ? `Salió a las ${hora(datos.salio)}` : '');
+          paso('entregado', 'hecho', hora(datos.entregado));
+          mapaBloque.hidden = true;
+          return;
+        }
+
+        pintarMapa(datos);
+      };
+
+      let fallas = 0;
+
+      const consultar = async () => {
+        if (document.hidden) return;
+        try {
+          const res = await fetch(`${API}/rastreo/${encodeURIComponent(token)}`, { headers: { Accept: 'application/json' }, cache: 'no-store' });
+          if (res.status === 404) return fin('No encontramos tu pedido', 'Revisa que el link esté completo o escríbenos por WhatsApp.');
+          if (res.status === 410) return fin('Este link ya venció', 'El seguimiento se cierra un par de horas después de la entrega.');
+          if (!res.ok) throw new Error(String(res.status));
+          fallas = 0;
+          pintar(await res.json());
+        } catch (error) {
+          fallas += 1;
+          if (fallas >= 3 && pasosCard.hidden) {
+            titulo.textContent = 'Sin conexión';
+            detalle.textContent = 'No pudimos consultar tu pedido. Seguimos intentando; si urge, escríbenos por WhatsApp.';
+          }
+        }
+      };
+
+      if (!/^[A-Za-z0-9]{32}$/.test(token)) {
+        fin('No encontramos tu pedido', 'Revisa que el link esté completo o escríbenos por WhatsApp.');
+        return;
+      }
+
+      consultar();
+      temporizador = setInterval(consultar, 10000);
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) consultar(); });
+    })();
+  </script>
+</body>
+</html>

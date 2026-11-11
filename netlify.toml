@@ -8,3 +8,9 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# El panel de entregas del sistema de pedidos lee el mapa desde otro dominio
+[[headers]]
+  for = "/mapa/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"

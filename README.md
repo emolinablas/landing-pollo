@@ -46,5 +46,11 @@ git push -u origin main
 2. Arrastra la carpeta `landing-pollo` directamente al navegador.
 3. El sitio estará activo al instante con una URL gratuita `.netlify.app`.
 
+## Pedidos conectados al sistema (VID)
+- La hoja de entrega lee las aldeas y el precio de envío del sistema de pedidos (constante `API` en `index.html`) y registra ahí el pedido como "por confirmar". El mensaje de WhatsApp lleva el código que devuelve el sistema (ej. `Pedido web: K7P2`).
+- Si el sistema no responde, la página usa la lista fija de aldeas (sin precios) y el pedido sale solo por WhatsApp, como antes.
+- `seguimiento.html?p=<clave>`: página que abre el cliente desde su link para ver los pasos del pedido, el tiempo estimado y al repartidor en el mapa.
+- En `netlify.toml`, `/mapa/*` permite que el panel de entregas del sistema lea el mapa desde otro dominio.
+
 ## Aldeas de entrega
-La lista está en `index.html`, dentro de `<fieldset class="aldeas">`. Cada aldea lleva `data-lat` y `data-lng` con su centro, que es adonde se mueve el mapa al elegirla.
+La lista fija está en `index.html`, dentro de `<fieldset class="aldeas">`, y solo se usa si el sistema no responde. Cada aldea lleva `data-lat` y `data-lng` con su centro, que es adonde se mueve el mapa al elegirla.

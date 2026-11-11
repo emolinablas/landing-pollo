@@ -1780,7 +1780,23 @@
       outline-offset: 2px;
     }
 
+    .aldeas small {
+      margin-left: 0.35em;
+      font-size: 0.85em;
+      font-weight: 500;
+      opacity: 0.75;
+    }
+
     .aldeas.is-missing span { box-shadow: inset 0 0 0 1.5px var(--ember); }
+
+    .input.is-missing { box-shadow: inset 0 0 0 2px var(--ember); }
+
+    .sheet-send:disabled {
+      opacity: 0.7;
+      cursor: progress;
+    }
+
+    #envio-error { margin: 0 0 10px; }
 
     .field-error {
       margin: 8px 0 0;
@@ -2346,15 +2362,16 @@
       <div class="solo-domicilio">
         <span class="field-label" id="aldea-label">Tu aldea</span>
         <fieldset class="aldeas" aria-labelledby="aldea-label">
-          <label><input type="radio" name="aldea" value="Ixhuatán" data-lat="14.1901" data-lng="-90.2740"><span>Ixhuatán</span></label>
-          <label><input type="radio" name="aldea" value="La Fila" data-lat="14.1699" data-lng="-90.2561"><span>La Fila</span></label>
+          <label><input type="radio" name="aldea" value="Ixhuatán" data-lat="14.1901" data-lng="-90.274"><span>Ixhuatán</span></label>
           <label><input type="radio" name="aldea" value="Estanzuelas" data-lat="14.1745" data-lng="-90.2622"><span>Estanzuelas</span></label>
-          <label><input type="radio" name="aldea" value="Pineda" data-lat="14.1682" data-lng="-90.2918"><span>Pineda</span></label>
-          <label><input type="radio" name="aldea" value="La Laguneta" data-lat="14.1755" data-lng="-90.2742"><span>La Laguneta</span></label>
-          <label><input type="radio" name="aldea" value="La Esperanza" data-lat="14.2137" data-lng="-90.2650"><span>La Esperanza</span></label>
-          <label><input type="radio" name="aldea" value="Llano Grande" data-lat="14.2330" data-lng="-90.2642"><span>Llano Grande</span></label>
-          <label><input type="radio" name="aldea" value="Media Legua" data-lat="14.1940" data-lng="-90.2585"><span>Media Legua</span></label>
-          <label><input type="radio" name="aldea" value="Otro"><span>Otro</span></label>
+          <label><input type="radio" name="aldea" value="Media Legua" data-lat="14.194" data-lng="-90.2585"><span>Media Legua</span></label>
+          <label><input type="radio" name="aldea" value="Santa Anita" data-lat="14.1931" data-lng="-90.2844"><span>Santa Anita</span></label>
+          <label><input type="radio" name="aldea" value="Los Hatillos" data-lat="14.2008" data-lng="-90.2724"><span>Los Hatillos</span></label>
+          <label><input type="radio" name="aldea" value="La Fila" data-lat="14.1699" data-lng="-90.2561"><span>La Fila</span></label>
+          <label><input type="radio" name="aldea" value="Llano Grande" data-lat="14.233" data-lng="-90.2642"><span>Llano Grande</span></label>
+          <label><input type="radio" name="aldea" value="La Esperanza" data-lat="14.2137" data-lng="-90.265"><span>La Esperanza</span></label>
+          <label><input type="radio" name="aldea" value="Cerro Chato" data-lat="14.2047" data-lng="-90.2611"><span>Cerro Chato</span></label>
+          <label><input type="radio" name="aldea" value="El Naranjo"><span>El Naranjo</span></label>
         </fieldset>
         <p class="field-error" id="aldea-error" hidden>Elige tu aldea para poder llevártelo.</p>
       </div>
@@ -2378,6 +2395,12 @@
       </div>
 
       <div>
+        <label class="field-label" for="telefono">Tu teléfono</label>
+        <input class="input" id="telefono" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel-national" placeholder="8 dígitos">
+        <p class="field-error" id="telefono-error" hidden>Escribe tu teléfono de 8 dígitos.</p>
+      </div>
+
+      <div>
         <label class="field-label" for="nombre">Tu nombre <em>(opcional)</em></label>
         <input class="input" id="nombre" type="text" maxlength="60" autocomplete="name" placeholder="¿A nombre de quién?">
       </div>
@@ -2385,10 +2408,11 @@
 
     <div class="sheet-foot">
       <p class="sheet-total"><span class="sheet-total-label">Total sin envío</span><strong>Q0</strong></p>
-      <a class="btn btn-wa sheet-send" href="https://wa.me/50254289478" target="_blank" rel="noopener">
+      <p class="field-error" id="envio-error" hidden></p>
+      <button type="button" class="btn btn-wa sheet-send">
         <svg class="i"><use href="#i-wa"/></svg>
-        Enviar pedido por WhatsApp
-      </a>
+        <span>Enviar pedido por WhatsApp</span>
+      </button>
     </div>
   </dialog>
 
@@ -2396,6 +2420,10 @@
     (() => {
       const WHATSAPP = '50254289478';
       const waUrl = (msg) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+      // Sistema de pedidos (VID). Si no responde, el pedido sale por WhatsApp como siempre.
+      const API = ['127.0.0.1', 'localhost'].includes(location.hostname)
+        ? 'http://127.0.0.1:8791/api/seguimiento'
+        : 'https://polloalalena.globalstechnology.com/api/seguimiento';
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
@@ -2488,34 +2516,63 @@
       const mapStatus = document.getElementById('mapa-estado');
       const refInput = document.getElementById('referencia');
       const nameInput = document.getElementById('nombre');
+      const phoneInput = document.getElementById('telefono');
+      const phoneError = document.getElementById('telefono-error');
+      const sendError = document.getElementById('envio-error');
       const MAP_BOUNDS = [[-90.34, 14.12], [-90.20, 14.28]];
       const STORE_KEY = 'pollo-entrega';
       let map = null;
       let pin = null; // {lat, lng} solo cuando el cliente lo marcó
+      let catalogo = false; // true cuando las aldeas y el envío vienen del sistema
 
       const modo = () => sheet.querySelector('[name="modo"]:checked').value;
       const aldea = () => sheet.querySelector('[name="aldea"]:checked');
 
-      function updateSend() {
+      const telefono = () => {
+        const digitos = phoneInput.value.replace(/\D/g, '');
+        return digitos.length === 11 && digitos.startsWith('502') ? digitos.slice(3) : digitos;
+      };
+
+      // Envío de la aldea elegida, o null si todavía no se sabe
+      const envio = () => {
+        const elegida = aldea();
+        return modo() === 'domicilio' && elegida && elegida.dataset.envio !== undefined ? Number(elegida.dataset.envio) : null;
+      };
+
+      // codigo y totales vienen del sistema cuando el pedido quedó registrado
+      const buildMessage = (codigo, totales) => {
         const domicilio = modo() === 'domicilio';
         const elegida = aldea();
-        const msg = ['¡Hola! Quiero hacer un pedido 🔥', ...orderLines];
+        const subtotal = totales ? totales.subtotal : orderTotal;
+        const costo = totales ? totales.costoenvio : envio();
+        const msg = ['¡Hola! Quiero hacer un pedido'];
+        if (codigo) msg.push(`Pedido web: ${codigo}`);
+        msg.push(...orderLines);
 
         if (domicilio) {
-          msg.push(`Total: Q${orderTotal} + envío`, '', 'Entrega: a domicilio');
-          msg.push(`Aldea: ${elegida ? elegida.value : ''}`);
+          if (costo === null) msg.push(`Total: Q${subtotal} + envío`);
+          else if (costo > 0) msg.push(`Envío: Q${costo}`, `Total: Q${subtotal + costo}`);
+          else msg.push(`Total: Q${subtotal}`);
+          msg.push('', 'Entrega: a domicilio', `Aldea: ${elegida ? elegida.value : ''}`);
           if (pin) msg.push(`Ubicación: https://maps.google.com/?q=${pin.lat.toFixed(6)},${pin.lng.toFixed(6)}`);
           if (refInput.value.trim()) msg.push(`Referencia: ${refInput.value.trim()}`);
         } else {
-          msg.push(`Total: Q${orderTotal}`, '', 'Entrega: paso a traer');
+          msg.push(`Total: Q${subtotal}`, '', 'Entrega: paso a traer');
         }
         msg.push(`Nombre: ${nameInput.value.trim()}`, 'Hora: ');
 
-        const href = waUrl(msg.join('\n'));
-        sendEl.href = href;
-        sheetSend.href = href;
-        sheet.querySelector('.sheet-total-label').textContent = domicilio ? 'Total sin envío' : 'Total';
-        sheet.querySelector('.sheet-total strong').textContent = `Q${orderTotal}`;
+        return msg.join('\n');
+      };
+
+      function updateSend() {
+        sendEl.href = waUrl(buildMessage());
+
+        const costo = envio();
+        const label = sheet.querySelector('.sheet-total-label');
+        if (modo() !== 'domicilio') label.textContent = 'Total';
+        else if (costo === null) label.textContent = 'Total sin envío';
+        else label.textContent = costo > 0 ? `Total con envío (Q${costo})` : 'Total, envío sin costo';
+        sheet.querySelector('.sheet-total strong').textContent = `Q${orderTotal + (costo || 0)}`;
       }
 
       const setStatus = (text, ok) => {
@@ -2671,6 +2728,54 @@
 
       refInput.addEventListener('input', updateSend);
       nameInput.addEventListener('input', updateSend);
+      phoneInput.addEventListener('input', () => {
+        phoneInput.classList.remove('is-missing');
+        phoneError.hidden = true;
+      });
+
+      // Aldeas y precio de envío desde el sistema; si no responde, queda la lista fija sin precios
+      const sinAcentos = (texto) => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+      const cargarCatalogo = async () => {
+        try {
+          const control = new AbortController();
+          const limite = setTimeout(() => control.abort(), 6000);
+          const res = await fetch(`${API}/catalogo`, { signal: control.signal, headers: { Accept: 'application/json' } });
+          clearTimeout(limite);
+          if (!res.ok) return;
+          const datos = await res.json();
+          if (!Array.isArray(datos.zonas) || !datos.zonas.length) return;
+
+          const elegida = aldea() ? sinAcentos(aldea().value) : '';
+          aldeasEl.textContent = '';
+          datos.zonas.forEach((zona) => {
+            const label = document.createElement('label');
+            const input = document.createElement('input');
+            const span = document.createElement('span');
+            input.type = 'radio';
+            input.name = 'aldea';
+            input.value = zona.nombre;
+            input.dataset.zonaid = zona.zonaid;
+            input.dataset.envio = zona.precioenvio;
+            if (zona.lat !== null) {
+              input.dataset.lat = zona.lat;
+              input.dataset.lng = zona.lng;
+            }
+            input.checked = sinAcentos(zona.nombre) === elegida;
+            span.textContent = zona.nombre;
+            if (zona.precioenvio > 0) {
+              const precio = document.createElement('small');
+              precio.textContent = `+Q${zona.precioenvio}`;
+              span.appendChild(precio);
+            }
+            label.append(input, span);
+            aldeasEl.appendChild(label);
+          });
+          catalogo = true;
+          updateSend();
+        } catch (error) { /* sin sistema: el pedido sale solo por WhatsApp */ }
+      };
+      cargarCatalogo();
 
       const remember = () => {
         try {
@@ -2679,7 +2784,8 @@
             aldea: aldea() ? aldea().value : '',
             pin,
             referencia: refInput.value.trim(),
-            nombre: nameInput.value.trim()
+            nombre: nameInput.value.trim(),
+            telefono: telefono()
           }));
         } catch (error) { /* sin almacenamiento, no pasa nada */ }
       };
@@ -2696,19 +2802,83 @@
           }
           refInput.value = saved.referencia || '';
           nameInput.value = saved.nombre || '';
+          phoneInput.value = saved.telefono || '';
         }
       } catch (error) { /* datos guardados inválidos: se ignoran */ }
 
-      sheetSend.addEventListener('click', (event) => {
+      // Registra el pedido en el sistema; devuelve {codigo, subtotal, costoenvio}, o null si no se pudo
+      const registrarPedido = async () => {
+        const control = new AbortController();
+        const limite = setTimeout(() => control.abort(), 8000);
+        try {
+          const domicilio = modo() === 'domicilio';
+          const res = await fetch(`${API}/pedidos-web`, {
+            method: 'POST',
+            signal: control.signal,
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              tipoentrega: domicilio ? 'domicilio' : 'tienda',
+              telefono: telefono(),
+              nombre: nameInput.value.trim(),
+              zonaid: domicilio ? Number(aldea().dataset.zonaid) : null,
+              lat: domicilio && pin ? pin.lat : null,
+              lng: domicilio && pin ? pin.lng : null,
+              referencia: domicilio ? refInput.value.trim() : '',
+              productos: [...cart].map(([clave, cantidad]) => ({ clave, cantidad }))
+            })
+          });
+          const datos = await res.json().catch(() => ({}));
+          if (res.status === 422 && datos.mensaje) return { error: datos.mensaje };
+          return res.ok && datos.codigo ? datos : null;
+        } catch (error) {
+          return null;
+        } finally {
+          clearTimeout(limite);
+        }
+      };
+
+      sheetSend.addEventListener('click', async () => {
+        sendError.hidden = true;
+
         if (modo() === 'domicilio' && !aldea()) {
-          event.preventDefault();
           aldeasEl.classList.add('is-missing');
           aldeaError.hidden = false;
           aldeasEl.scrollIntoView({ block: 'center' });
           return;
         }
+        if (telefono().length !== 8) {
+          phoneInput.classList.add('is-missing');
+          phoneError.hidden = false;
+          phoneInput.scrollIntoView({ block: 'center' });
+          return;
+        }
         remember();
+
+        let registro = null;
+        if (catalogo) {
+          const texto = sheetSend.querySelector('span');
+          sheetSend.disabled = true;
+          texto.textContent = 'Enviando pedido…';
+          registro = await registrarPedido();
+          sheetSend.disabled = false;
+          texto.textContent = 'Enviar pedido por WhatsApp';
+
+          if (registro && registro.error) {
+            sendError.textContent = registro.error;
+            sendError.hidden = false;
+            return;
+          }
+        }
+
+        const mensaje = registro ? buildMessage(registro.codigo, registro) : buildMessage();
         sheet.close();
+        if (registro) {
+          // ya quedó registrado: se vacía para que un segundo toque no lo duplique
+          cart.clear();
+          render();
+        }
+        // en la misma pestaña: después de esperar al sistema, el navegador bloquearía una ventana nueva
+        location.href = waUrl(mensaje);
       });
 
       if (typeof sheet.showModal === 'function') {
